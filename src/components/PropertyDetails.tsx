@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Edit, Package, Calendar, Building, Hash, Barcode, DollarSign } from 'lucide-react';
+import { X, Edit, Package, Calendar, Building, Hash, Barcode } from 'lucide-react';
 import { Property } from '../types';
 
 interface PropertyDetailsProps {

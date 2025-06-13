@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Plus, Search, Filter, Edit, Trash2, Package, Eye } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, Package, Eye } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import { Property } from '../types';
 import PropertyForm from './PropertyForm';
 import PropertyDetails from './PropertyDetails';
+import { getStockStatus } from '../../utils/propertyUtils';
 
 const Properties: React.FC = () => {
   const { properties, deleteProperty } = useData();
@@ -48,13 +49,13 @@ const Properties: React.FC = () => {
     setEditingProperty(null);
   };
 
-  const getStockStatus = (property: Property) => {
-    const percentage = (property.availableQuantity / property.quantity) * 100;
-    if (percentage <= 10) return { status: 'critical', color: 'text-red-600 bg-red-50' };
-    if (percentage <= 25) return { status: 'low', color: 'text-orange-600 bg-orange-50' };
-    if (percentage <= 50) return { status: 'medium', color: 'text-yellow-600 bg-yellow-50' };
-    return { status: 'good', color: 'text-green-600 bg-green-50' };
-  };
+  // const getStockStatus = (property: Property) => { // Removed this local definition
+  //   const percentage = (property.availableQuantity / property.quantity) * 100;
+  //   if (percentage <= 10) return { status: 'critical', color: 'text-red-600 bg-red-50' };
+  //   if (percentage <= 25) return { status: 'low', color: 'text-orange-600 bg-orange-50' };
+  //   if (percentage <= 50) return { status: 'medium', color: 'text-yellow-600 bg-yellow-50' };
+  //   return { status: 'good', color: 'text-green-600 bg-green-50' };
+  // };
 
   const PropertyCard: React.FC<{ property: Property }> = ({ property }) => {
     const stockStatus = getStockStatus(property);

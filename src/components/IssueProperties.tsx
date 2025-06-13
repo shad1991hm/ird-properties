@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CheckSquare, Search, Filter, Package, User, Calendar, FileText } from 'lucide-react';
+import { CheckSquare, Search, Package, User } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import { useAuth } from '../contexts/AuthContext';
 import { PropertyRequest } from '../types';
@@ -7,7 +7,7 @@ import IssueForm from './IssueForm';
 
 const IssueProperties: React.FC = () => {
   const { requests } = useData();
-  const { user } = useAuth();
+  useAuth(); // Called for its potential side effects or context connection
   const [selectedRequest, setSelectedRequest] = useState<PropertyRequest | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState<string>('date');

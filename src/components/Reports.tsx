@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BarChart3, Download, Filter, Calendar, Package, FileText, TrendingUp, PieChart } from 'lucide-react';
+import { BarChart3, Download, Package, TrendingUp } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import { Bar, Pie } from 'react-chartjs-2';
 import {
@@ -43,7 +43,7 @@ const Reports: React.FC = () => {
     // Apply date range filter
     if (dateRange !== 'all') {
       const now = new Date();
-      let startDate = new Date();
+      const startDate = new Date();
 
       switch (dateRange) {
         case 'week':

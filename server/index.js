@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-import sqlite3 from 'sqlite3';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import * as sqlite3 from 'sqlite3'; // Changed to namespace import
+import * as bcrypt from 'bcryptjs'; // Changed to namespace import
+import * as jwt from 'jsonwebtoken'; // Changed to namespace import
 import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -687,6 +687,17 @@ app.get('/api/dashboard/stats', authenticateToken, (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  // Original db.serialize and app.listen calls
+  // db.serialize(() => { // This serialize was already at the top level, no need to re-wrap if it's for table init only
+  //    // ... (all table creations and default data insertion code) ...
+  //    // Example: db.run('CREATE TABLE IF NOT EXISTS users ...');
+  // }); // The db.serialize() at the top seems to handle initialization already.
+  // If the intention was to re-run initialization for non-test, that's fine,
+  // but usually it's done once. For this change, I'll assume the top-level serialize is sufficient.
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+export { app, db }; // Export app and db (db might be useful for other tests)

@@ -1,28 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Package, FileText, CheckSquare, TrendingUp, Users, AlertTriangle } from 'lucide-react';
+import React from 'react';
+import { Package, FileText, CheckSquare, TrendingUp, AlertTriangle } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
-import { dashboardAPI } from '../services/api';
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const { properties, requests, issuedProperties, loading } = useData();
-  const [dashboardStats, setDashboardStats] = useState<any>({});
-
-  useEffect(() => {
-    const fetchDashboardStats = async () => {
-      try {
-        const response = await dashboardAPI.getStats();
-        setDashboardStats(response.data);
-      } catch (error) {
-        console.error('Error fetching dashboard stats:', error);
-      }
-    };
-
-    if (user) {
-      fetchDashboardStats();
-    }
-  }, [user]);
 
   const getStats = () => {
     const totalProperties = properties.reduce((sum, p) => sum + p.quantity, 0);

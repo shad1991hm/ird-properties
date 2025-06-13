@@ -2,6 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Search, Edit, Trash2, User, Eye, EyeOff, Shield, Users as UsersIcon } from 'lucide-react';
 import { usersAPI } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
+import { AxiosError } from 'axios';
+
+// Define a more specific type for the expected error response
+interface ApiErrorData {
+  error?: string;
+  message?: string; // common alternative to 'error'
+}
 
 interface User {
   id: string;
@@ -93,10 +100,15 @@ const UserManagement: React.FC = () => {
 
       await fetchUsers();
       handleCloseForm();
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error saving user:', error);
-      if (error.response?.data?.error) {
-        setErrors({ submit: error.response.data.error });
+      const axiosError = error as AxiosError<ApiErrorData>;
+      if (axiosError.response?.data?.error) {
+        setErrors({ submit: axiosError.response.data.error });
+      } else if (axiosError.response?.data?.message) {
+        setErrors({ submit: axiosError.response.data.message });
+      } else {
+        setErrors({ submit: 'An unexpected error occurred.' });
       }
     } finally {
       setIsSubmitting(false);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Package, Search, Filter, User, Calendar, Download, FileText } from 'lucide-react';
+import { Package, Search, User, Calendar, Download, FileText } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import { IssuedProperty } from '../types';
 

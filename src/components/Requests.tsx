@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileText, Search, Filter, Eye, Check, X, Edit3, Clock, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { FileText, Search, Eye, Check, X, Clock, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import { useAuth } from '../contexts/AuthContext';
 import { PropertyRequest } from '../types';

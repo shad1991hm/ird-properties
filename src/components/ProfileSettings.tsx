@@ -2,6 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { User, Save, Eye, EyeOff, Lock, Mail, Building } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { usersAPI } from '../services/api';
+import { AxiosError } from 'axios';
+
+// Define a more specific type for the expected error response
+interface ApiErrorData {
+  error?: string;
+  message?: string; // common alternative to 'error'
+}
 
 const ProfileSettings: React.FC = () => {
   const { user, logout } = useAuth();
@@ -92,9 +99,10 @@ const ProfileSettings: React.FC = () => {
       setTimeout(() => {
         window.location.reload();
       }, 1000);
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error updating profile:', error);
-      setErrors({ submit: error.response?.data?.error || 'Failed to update profile' });
+      const axiosError = error as AxiosError<ApiErrorData>;
+      setErrors({ submit: axiosError.response?.data?.error || axiosError.response?.data?.message || 'Failed to update profile' });
     } finally {
       setLoading(false);
     }
@@ -126,9 +134,10 @@ const ProfileSettings: React.FC = () => {
       setTimeout(() => {
         logout();
       }, 2000);
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error changing password:', error);
-      setErrors({ submit: error.response?.data?.error || 'Failed to change password' });
+      const axiosError = error as AxiosError<ApiErrorData>;
+      setErrors({ submit: axiosError.response?.data?.error || axiosError.response?.data?.message || 'Failed to change password' });
     } finally {
       setLoading(false);
     }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Package, Search, Filter, ShoppingCart, Eye } from 'lucide-react';
+import { Package, Search, ShoppingCart } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import { useAuth } from '../contexts/AuthContext';
 import { Property } from '../types';
@@ -7,7 +7,7 @@ import RequestForm from './RequestForm';
 
 const AvailableProperties: React.FC = () => {
   const { properties } = useData();
-  const { user } = useAuth();
+  useAuth(); // Assuming useAuth needs to be called for its side effects or context connection
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('name');
